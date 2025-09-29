@@ -3,6 +3,7 @@ import React from "react";
 
 import { twMerge } from "tailwind-merge";
 import { TracingBeam } from "./ui/tracing-beam";
+import Image from "next/image";
 
 export function TracingBeamDemo() {
   return (
@@ -16,11 +17,11 @@ export function TracingBeamDemo() {
 
             <div className="text-md text-white  prose prose-sm dark:prose-invert">
               {item?.image && (
-                <img
+                <Image
                   src={item.image}
                   alt="blog thumbnail"
-                  height="1000"
-                  width="1000"
+                  width={1000}
+                  height={1000}
                   className="rounded-lg mb-10 object-cover"
                 />
               )}
@@ -32,7 +33,6 @@ export function TracingBeamDemo() {
             </div>
           </div>
         ))}
-        
       </div>
     </TracingBeam>
   );
