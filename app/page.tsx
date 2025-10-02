@@ -1,12 +1,25 @@
 "use client";
+
 import React, { useState } from "react";
-import { Home } from "../components/home";
-import { Work } from "../components/projectWork";
-import { Footer } from "@/components/Footer";
+import dynamic from "next/dynamic";
 import Preloader from "@/components/preloader";
 
-export default function HomePage() {
+const Home = dynamic(
+  () => import("../components/home").then((mod) => mod.Home),
+  { ssr: false }
+);
+const Work = dynamic(
+  () => import("../components/projectWork").then((mod) => mod.Work),
+  { ssr: false }
+);
+const Footer = dynamic(
+  () => import("@/components/Footer").then((mod) => mod.Footer),
+  { ssr: false }
+);
+
+export default function App() {
   const [loaded, setLoaded] = useState(false);
+
   return (
     <main className="relative">
       <Preloader onComplete={() => setLoaded(true)} />
@@ -17,9 +30,6 @@ export default function HomePage() {
           <Footer />
         </div>
       )}
-     
-        
-      
     </main>
   );
 }

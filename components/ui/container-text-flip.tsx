@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useId } from "react";
+import React, { useState, useEffect, useId, useRef } from "react";
 
 import { motion } from "motion/react";
 import { cn } from "../../lib/utils";
@@ -28,7 +28,7 @@ export function ContainerTextFlip({
   const id = useId();
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [width, setWidth] = useState(100);
-  const textRef = React.useRef(null);
+   const textRef = useRef<HTMLDivElement | null>(null);
 
   const updateWidthForWord = () => {
     if (textRef.current) {

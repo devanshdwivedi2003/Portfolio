@@ -115,14 +115,14 @@ html, body {
   margin: 0;
   padding: 0;
   height: 100%;
-  background: #000; /* black */
+  background: #000;
   overflow-x: hidden;
 }
 
 #smooth-wrapper,
 #smooth-content {
   min-height: 100%;
-  background: #000; /* ensure wrapper is black */
+  background: #000; 
 }
 
 @layer base {
