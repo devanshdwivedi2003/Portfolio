@@ -1,6 +1,6 @@
 "use client"
 import { cn } from "@/lib/utils";
-import { IconLayoutNavbarCollapse } from "@tabler/icons-react";
+import { TbLayoutNavbarCollapse as IconLayoutNavbarCollapse } from "react-icons/tb";
 import {
   AnimatePresence,
   MotionValue,
@@ -65,6 +65,9 @@ const FloatingDockMobile = ({
                 <a
                   href={item.href}
                   key={item.title}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={item.title}
                   className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-50 dark:bg-neutral-900"
                 >
                   <div className="h-4 w-4">{item.icon}</div>
@@ -75,6 +78,7 @@ const FloatingDockMobile = ({
         )}
       </AnimatePresence>
       <button
+        aria-label="Toggle social links"
         onClick={() => setOpen(!open)}
         className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-50 dark:bg-neutral-800"
       >
@@ -162,7 +166,7 @@ function IconContainer({
   const [hovered, setHovered] = useState(false);
 
   return (
-    <a href={href}>
+    <a href={href} target="_blank" rel="noopener noreferrer" aria-label={title}>
       <motion.div
         ref={ref}
         style={{ width, height }}

@@ -119,10 +119,14 @@ html, body {
   overflow-x: hidden;
 }
 
+/* Transparent so the fixed sparkles layer shows through every section */
+#smooth-wrapper {
+  z-index: 1;
+}
 #smooth-wrapper,
 #smooth-content {
   min-height: 100%;
-  background: #000; 
+  background: transparent;
 }
 
 @layer base {
@@ -132,4 +136,20 @@ html, body {
   body {
     @apply bg-background text-foreground;
   }
+}
+
+::selection {
+  background: #e5e7eb;
+  color: #000;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #000;
+}
+::-webkit-scrollbar-thumb {
+  background: #3f3f46;
+  border-radius: 9999px;
 }

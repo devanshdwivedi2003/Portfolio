@@ -25,9 +25,12 @@ export const TracingBeam = ({
   const [svgHeight, setSvgHeight] = useState(0);
 
   useEffect(() => {
-    if (contentRef.current) {
-      setSvgHeight(contentRef.current.offsetHeight);
-    }
+    const el = contentRef.current;
+    if (!el) return;
+    // Track height changes (e.g. images loading) so the beam spans the content
+    const observer = new ResizeObserver(() => setSvgHeight(el.offsetHeight));
+    observer.observe(el);
+    return () => observer.disconnect();
   }, []);
 
   const y1 = useSpring(

@@ -1,41 +1,35 @@
 "use client";
 import React from "react";
-import { motion, Transition } from "motion/react";
-
-const transition: Transition = {
-  type: "spring",
-  mass: 0.5,
-  damping: 11.5,
-  stiffness: 100,
-  restDelta: 0.001,
-  restSpeed: 0.001,
-};
+import { motion } from "motion/react";
 
 export const MenuItem = ({
   setActive,
   active,
   item,
-  
+  href,
+  onClick,
 }: {
   setActive: (item: string) => void;
   active: string | null;
   item: string;
-  children?: React.ReactNode;
+  href: string;
+  onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
 }) => {
   return (
-    <div onMouseEnter={() => setActive(item)} className="relative ">
-      <motion.p
-        transition={{ duration: 0.3 }}
-        className="cursor-pointer text-white  hover:opacity-[0.7] "
+    <div onMouseEnter={() => setActive(item)} className="relative">
+      <a
+        href={href}
+        onClick={onClick}
+        className="relative z-10 block px-2 sm:px-3 py-1.5 text-xs sm:text-sm md:text-base text-white transition-opacity hover:opacity-90"
       >
         {item}
-      </motion.p>
-      {active !== null && (
+      </a>
+      {active === item && (
         <motion.div
-          initial={{ opacity: 0, scale: 0.85, y: 10 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={transition}
-        ></motion.div>
+          layoutId="nav-hover"
+          className="absolute inset-0 rounded-full bg-white/15"
+          transition={{ type: "spring", bounce: 0.25, duration: 0.4 }}
+        />
       )}
     </div>
   );
@@ -51,10 +45,9 @@ export const Menu = ({
   return (
     <nav
       onMouseLeave={() => setActive(null)}
-      className="relative rounded-full border border-transparent dark:bg-gray-900/30 dark:border-white/[0.2] shadow-input flex justify-center space-x-9 px-8 py-4 bg-white/10 backdrop-blur-2xl text-white"
+      className="relative rounded-full border border-white/15 shadow-input flex justify-center gap-1 md:gap-3 px-2 md:px-4 py-2 bg-white/10 backdrop-blur-2xl text-white"
     >
       {children}
     </nav>
   );
 };
-

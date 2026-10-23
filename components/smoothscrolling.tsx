@@ -3,10 +3,21 @@
 import { useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-// You need the ScrollSmoother file from Club GreenSock
 import { ScrollSmoother } from "gsap/ScrollSmoother";
 
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
+
+// Scrolls to a section, going through ScrollSmoother when it's active
+export function scrollToSection(id: string) {
+  const target = document.getElementById(id);
+  if (!target) return;
+  const smoother = ScrollSmoother.get();
+  if (smoother) {
+    smoother.scrollTo(target, true, "top top");
+  } else {
+    target.scrollIntoView({ behavior: "smooth" });
+  }
+}
 
 export default function SmoothLayout({
   children,
@@ -14,14 +25,29 @@ export default function SmoothLayout({
   children: React.ReactNode;
 }) {
   useEffect(() => {
-    if (!ScrollSmoother.get()) {
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    const smoother =
+      ScrollSmoother.get() ??
       ScrollSmoother.create({
         wrapper: "#smooth-wrapper",
         content: "#smooth-content",
-        smooth: 2,
+        smooth: reduceMotion ? 0 : 1.5,
         effects: true,
       });
-    }
+
+    // Content is dynamically loaded, so recalculate once images/fonts settle
+    const refresh = () => ScrollTrigger.refresh();
+    window.addEventListener("load", refresh);
+    const timeout = setTimeout(refresh, 1000);
+
+    return () => {
+      window.removeEventListener("load", refresh);
+      clearTimeout(timeout);
+      smoother.kill();
+    };
   }, []);
 
   return (

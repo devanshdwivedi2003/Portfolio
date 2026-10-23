@@ -21,6 +21,7 @@ export function HoverBorderGradient({
     className?: string;
     duration?: number;
     clockwise?: boolean;
+    href?: string;
   } & React.HTMLAttributes<HTMLElement>
 >) {
   const [hovered, setHovered] = useState<boolean>(false);
@@ -54,7 +55,8 @@ export function HoverBorderGradient({
       }, duration * 1000);
       return () => clearInterval(interval);
     }
-  }, );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [hovered, duration, clockwise]);
   return (
     <Tag
       onMouseEnter={() => {
